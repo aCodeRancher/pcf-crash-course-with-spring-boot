@@ -1,5 +1,12 @@
----
 applications:
- - name : hello-world-rest-api
-   env:
-       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+}}'
+- name: hello-world-rest-api
+  disk_quota: 1G
+  env:
+    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+}}'
+  instances: 1
+  memory: 1G
+  path: target/hello-world-rest-api.jar
+  routes:
+  - route: hello-world-rest-api-bright-hippopotamus-qa.cfapps.io
+  - route: hello-world-rest-api-hhma-100.cfapps.io
+  stack: cflinuxfs3
