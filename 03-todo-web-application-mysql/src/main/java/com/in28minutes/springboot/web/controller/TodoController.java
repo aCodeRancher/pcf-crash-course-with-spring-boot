@@ -39,7 +39,7 @@ public class TodoController {
 				dateFormat, false));
 	}
 
-	@RequestMapping(value = "/listtodos", method = RequestMethod.GET)
+	@RequestMapping(value = "/list-todos", method = RequestMethod.GET)
 	public String showTodos(ModelMap model) {
 		String name = getLoggedInUserName(model);
 		model.put("todos", repository.findByUser(name));
