@@ -5,8 +5,11 @@ import java.util.Date;
 
 import javax.validation.Valid;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ import com.in28minutes.springboot.web.model.Todo;
 import com.in28minutes.springboot.web.service.TodoRepository;
 
 @Controller
+@Getter
 public class TodoController {
 	
 	@Autowired
@@ -35,7 +39,7 @@ public class TodoController {
 				dateFormat, false));
 	}
 
-	@RequestMapping(value = "/list-todos", method = RequestMethod.GET)
+	@RequestMapping(value = "/listtodos", method = RequestMethod.GET)
 	public String showTodos(ModelMap model) {
 		String name = getLoggedInUserName(model);
 		model.put("todos", repository.findByUser(name));
@@ -44,14 +48,20 @@ public class TodoController {
 	}
 
 	private String getLoggedInUserName(ModelMap model) {
-		Object principal = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		
-		if (principal instanceof UserDetails) {
-			return ((UserDetails) principal).getUsername();
+		String defaultName = "in30minutes";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null) {
+			Object principal = authentication.getPrincipal();
+
+			if (principal instanceof UserDetails) {
+				return ((UserDetails) principal).getUsername();
+			}
+
+			return principal.toString();
 		}
-		
-		return principal.toString();
+		else {
+			return defaultName;
+		}
 	}
 
 	@RequestMapping(value = "/add-todo", method = RequestMethod.GET)
