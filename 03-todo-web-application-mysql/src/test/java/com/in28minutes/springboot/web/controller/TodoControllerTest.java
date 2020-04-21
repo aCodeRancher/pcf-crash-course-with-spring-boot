@@ -32,7 +32,7 @@ class TodoControllerTest {
     public void showTodos() throws Exception {
       TodoRepository repository = todoController.getRepository();
       List<Todo> todos = repository.findByUser("in30minutes");
-      mockMvc.perform(get("/listtodos"))
+      mockMvc.perform(get("/list-todos/"))
                .andExpect(model().attribute("todos", todos ))
               .andExpect(view().name("list-todos"));
     }
