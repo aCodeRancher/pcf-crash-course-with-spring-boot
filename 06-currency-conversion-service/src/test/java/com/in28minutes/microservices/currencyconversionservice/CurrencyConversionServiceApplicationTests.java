@@ -29,4 +29,21 @@ public class CurrencyConversionServiceApplicationTests {
       assertTrue(responseBean.getTotalCalculatedAmount().intValue() == 6500 );
       assertTrue(responseBean.getId() == 10001);
    }
+
+    @Test
+    public void contextLoads_usingServiceRegistry() throws RestClientException {
+	    //This is just my route. Other people will have different routes.
+	    String route = "currency-conversion-service-hma-101.cfapps.io";
+        TestRestTemplate testRestTemplate = new TestRestTemplate();
+        ResponseEntity<CurrencyConversionBean> response = testRestTemplate.exchange(
+                "http://"+route+"/currency-converter/from/{from}/to/{to}/quantity/{quantity}",
+                HttpMethod.GET, null, CurrencyConversionBean.class, "USD", "INR", "100");
+        CurrencyConversionBean responseBean = response.getBody();
+        assertTrue(responseBean.getQuantity().equals(BigDecimal.valueOf(100)));
+        assertTrue(responseBean.getFrom().equals("USD"));
+        assertTrue(responseBean.getTo().equals("INR"));
+        assertTrue(responseBean.getConversionMultiple().intValue() == 65);
+        assertTrue(responseBean.getTotalCalculatedAmount().intValue() == 6500 );
+        assertTrue(responseBean.getId() == 10001);
+    }
 }
