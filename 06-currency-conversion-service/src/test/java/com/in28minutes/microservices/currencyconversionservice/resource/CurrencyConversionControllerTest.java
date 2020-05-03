@@ -1,6 +1,5 @@
 package com.in28minutes.microservices.currencyconversionservice.resource;
 
-
 import com.in28minutes.microservices.currencyconversionservice.util.environment.InstanceInformationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
