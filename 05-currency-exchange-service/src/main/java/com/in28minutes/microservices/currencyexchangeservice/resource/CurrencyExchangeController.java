@@ -5,6 +5,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -23,6 +24,12 @@ public class CurrencyExchangeController {
 	@Autowired
 	private InstanceInformationService instanceInformationService;
 
+	@Value("${someconfiguration}")
+	private String someConfig ;
+
+	@Value("${someOtherConfiguration}")
+	private String someOtherConfig;
+
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
 	public ExchangeValue retrieveExchangeValue(@PathVariable String from, @PathVariable String to,
 			@RequestHeader Map<String, String> headers) {
@@ -31,7 +38,7 @@ public class CurrencyExchangeController {
 
 		ExchangeValue exchangeValue = repository.findByFromAndTo(from, to);
 
-		LOGGER.info("{} {} {}", from, to, exchangeValue);
+		LOGGER.info("{} {} {} {} {} ", from, to, exchangeValue, someConfig, someOtherConfig);
 
 		if (exchangeValue == null) {
 			throw new RuntimeException("Unable to find data to convert " + from + " to " + to);
