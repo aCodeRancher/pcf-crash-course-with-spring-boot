@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//Run this unit test without the currency exchange service.
+//Run this unit test without the currency exchange service and without the cloud config server.
 @WebMvcTest(CurrencyConversionController.class)
 @AutoConfigureMockMvc
 @ComponentScan("com.in28minutes.microservices.currencyconversionservice.util.environment")
@@ -51,7 +51,7 @@ class CurrencyConversionControllerTest {
                 .andReturn();
       String expected =
               "{\"id\":10005,\"from\":\"USD\",\"to\":\"INR\",\"conversionMultiple\":65,\"quantity\":100," +
-                      "\"totalCalculatedAmount\":6500,\"exchangeEnvironmentInfo\":\"N/A\"," +
+                      "\"totalCalculatedAmount\":6175.00,\"exchangeEnvironmentInfo\":\"N/A\"," +
                       "\"conversionEnvironmentInfo\":\"N/A\"}";
 
       String output = result.getResponse().getContentAsString();
