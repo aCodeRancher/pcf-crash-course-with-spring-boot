@@ -15,9 +15,9 @@ public class CurrencyConversionServiceApplicationTests {
 
 	//Before running this integration test , run eureka naming server, spring cloud config server, currency exchange service and
 	//currency conversion service.
-    //When cloud config server is up, the conversion profit percent = 60 by default
-    //conversionMultiple = (100-60)/100 = 0.4
-    //convertedValue = 100*65*0.4=2600
+    //When cloud config server is up, the conversion profit percent = 20 by default
+    //conversionMultiple = (100-20)/100 = 0.8
+    //convertedValue = 100*65*0.8=5200
 	@Test
 	public void contextLoads() throws RestClientException {
       TestRestTemplate testRestTemplate = new TestRestTemplate();
@@ -29,7 +29,7 @@ public class CurrencyConversionServiceApplicationTests {
       assertTrue(responseBean.getFrom().equals("USD"));
       assertTrue(responseBean.getTo().equals("INR"));
       assertTrue(responseBean.getConversionMultiple().intValue() == 65);
-      assertTrue(responseBean.getTotalCalculatedAmount().intValue() == 2600 );
+      assertTrue(responseBean.getTotalCalculatedAmount().intValue() == 5200 );
       assertTrue(responseBean.getId() == 10001);
    }
 
@@ -51,6 +51,24 @@ public class CurrencyConversionServiceApplicationTests {
         assertTrue(responseBean.getConversionMultiple().intValue() == 65);
         assertTrue(responseBean.getTotalCalculatedAmount().intValue() == 6175 );
         assertTrue(responseBean.getId() == 10001);
+    }
+
+    //Test fall back method when the Eureka naming server and exchange service are not running.
+    @Test
+    public void contextLoads_withFallBack() throws RestClientException {
+        TestRestTemplate testRestTemplate = new TestRestTemplate();
+        ResponseEntity<CurrencyConversionBean> response = testRestTemplate.exchange(
+                "http://localhost:8100/currency-converter/from/{from}/to/{to}/quantity/{quantity}",
+                HttpMethod.GET, null, CurrencyConversionBean.class, "USD", "INR", "100");
+        CurrencyConversionBean responseBean = response.getBody();
+        assertTrue(responseBean.getQuantity().equals(BigDecimal.valueOf(100)));
+        assertTrue(responseBean.getFrom().equals("USD"));
+        assertTrue(responseBean.getTo().equals("INR"));
+        assertTrue(responseBean.getConversionMultiple().intValue() == 0);
+        assertTrue(responseBean.getTotalCalculatedAmount().intValue() == 0 );
+        assertTrue(responseBean.getId() == 0);
+        assertTrue(responseBean.getConversionEnvironmentInfo().equals("An Error Occurred"));
+        assertTrue(responseBean.getExchangeEnvironmentInfo().equals("An Error Occurred"));
     }
 
    /* @Test
