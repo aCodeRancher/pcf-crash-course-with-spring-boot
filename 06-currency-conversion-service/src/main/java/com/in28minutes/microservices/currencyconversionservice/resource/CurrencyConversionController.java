@@ -35,7 +35,7 @@ public class CurrencyConversionController {
 	public CurrencyConversionBean convertCurrency(@PathVariable String from, @PathVariable String to,
 			@PathVariable BigDecimal quantity) {
 
-		LOGGER.info("Received Request to convert from {} {} to {}. Profit - {} ", quantity, from, to, conversionProfitPercentage);
+		LOGGER.info("Received Request to convert from {} {} to {}, profit {} ", quantity, from, to, conversionProfitPercentage);
 
 		CurrencyConversionBean response = proxy.retrieveExchangeValue(from, to);
 
