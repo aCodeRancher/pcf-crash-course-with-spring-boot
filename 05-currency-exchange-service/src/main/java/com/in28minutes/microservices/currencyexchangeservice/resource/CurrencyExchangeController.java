@@ -24,10 +24,10 @@ public class CurrencyExchangeController {
 	@Autowired
 	private InstanceInformationService instanceInformationService;
 
-	@Value("${someconfiguration}")
+	@Value("${someconfiguration:myConfig}")
 	private String someConfig ;
 
-	@Value("${someOtherConfiguration}")
+	@Value("${someOtherConfiguration:myConfig1}")
 	private String someOtherConfig;
 
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
