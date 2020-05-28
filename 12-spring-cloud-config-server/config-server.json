@@ -1,6 +1,6 @@
 {  
   "git":{  
-    "uri":"https://github.com/in28minutes/config-server.git",
+    "uri":"https://github.com/aCodeRancher/config-server.git",
     "label":"master",
     "searchPaths":"dev"
   }
