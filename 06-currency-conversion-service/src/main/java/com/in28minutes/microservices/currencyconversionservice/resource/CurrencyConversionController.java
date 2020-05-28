@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.in28minutes.microservices.currencyconversionservice.util.environment.InstanceInformationService;
 
 @RestController
-@RefreshScope
+//@RefreshScope
 public class CurrencyConversionController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyConversionController.class);
