@@ -5,6 +5,7 @@ import com.in28minutes.springboot.web.security.SecurityConfiguration;
 import com.in28minutes.springboot.web.service.TodoRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -27,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(TodoController.class)
 @AutoConfigureMockMvc
+
 @Import({SecurityConfiguration.class})
 class TodoControllerTest {
 
