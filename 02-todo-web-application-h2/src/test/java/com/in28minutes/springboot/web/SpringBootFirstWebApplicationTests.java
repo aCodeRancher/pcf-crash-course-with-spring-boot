@@ -29,6 +29,7 @@ public class SpringBootFirstWebApplicationTests {
 				.andExpect(authenticated().withUsername("in28minutes"));
 		mockMvc.perform(logout()).andExpect(redirectedUrl("/login?logout"));
 
+
 	}
 
 	@Test
