@@ -12,7 +12,7 @@ applications:
   space: development
   timeout: 120
   routes:
-  - route: spring-boot-route-service.cfapps.io
+  - route: spring-boot-route-service-hma-101.cfapps.io
 # random-route: true  
   stack: cflinuxfs3
   buildpacks:
